@@ -1,3 +1,8 @@
+import EventsSearch from "../src/pages/EventsSearch";
 export default function App() {
-  return <div className="text-xl">Hello</div>;
+  return (
+    <>
+      <EventsSearch></EventsSearch>
+    </>
+  );
 }
