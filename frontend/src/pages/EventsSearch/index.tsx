@@ -1,5 +1,5 @@
-import BackgroundImage from '../../assets/background.jpg';
-import SearchForm from './components/SearchForm';
+import BackgroundImage from "../../assets/background.jpg";
+import SearchForm from "./components/SearchForm";
 
 export default function Index() {
   const sectionStyle = {
@@ -7,8 +7,8 @@ export default function Index() {
   };
 
   return (
-    <section className='min-h-screen bg-cover' style={sectionStyle}>
-        <SearchForm/>
+    <section className="min-h-screen bg-cover" style={sectionStyle}>
+      <SearchForm />
     </section>
   );
 }
