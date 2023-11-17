@@ -3,4 +3,7 @@ export default interface InputProps {
   label: string;
   message: string;
   type: PrimitiveInputProps["type"];
+  value: PrimitiveInputProps["value"];
+  name?: string;
+  onChange?: PrimitiveInputProps["onChange"];
 }

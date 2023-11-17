@@ -1,18 +1,19 @@
 import { useState } from "react";
 import * as Select from "@radix-ui/react-select";
-import { CategoryData, DEFAULT_VALUE } from "../data/CategoryData";
+import { CategoryData, DEFAULT_CATEGORY } from "../data/CategoryData";
 import DropdownIcon from "../../../icons/DropdownIcon";
-export default function Category() {
-  const [category, setCategory] = useState(DEFAULT_VALUE);
+import { useEventSearchContext } from "../context/EventSearchContextProvider";
 
+export default function Category() {
+  const { searchSettings, updateSettings } = useEventSearchContext();
   function changeCategory(value: string) {
-    setCategory(value);
+    if (updateSettings) updateSettings(value, "category");
   }
 
   return (
-    <Select.Root value={category} onValueChange={changeCategory}>
+    <Select.Root value={searchSettings.category} onValueChange={changeCategory}>
       <Select.Trigger className="mt-6 text-sm w-full inline-flex items-center justify-between rounded px-3 leading-none h-9 bg-white text-gray-800 border border-gray-300 focus:outline-none focus:border-blue-500">
-        <Select.Value>{category}</Select.Value>
+        <Select.Value>{searchSettings.category}</Select.Value>
         <DropdownIcon />
       </Select.Trigger>
       <Select.Portal>

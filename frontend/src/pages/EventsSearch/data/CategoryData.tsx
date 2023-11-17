@@ -1,2 +1,2 @@
-export const DEFAULT_VALUE = "Default"
-export const CategoryData = [DEFAULT_VALUE,"Music","Sports"]
+export const DEFAULT_CATEGORY = "Default"
+export const CategoryData = [DEFAULT_CATEGORY,"Music","Sports"]

@@ -1,5 +1,6 @@
 import BackgroundImage from "../../assets/background.jpg";
 import SearchForm from "./components/SearchForm";
+import EventSearchContextProvider from "./context/EventSearchContextProvider";
 
 export default function Index() {
   const sectionStyle = {
@@ -8,7 +9,9 @@ export default function Index() {
 
   return (
     <section className="min-h-screen bg-cover" style={sectionStyle}>
-      <SearchForm />
+        <EventSearchContextProvider>
+            <SearchForm />
+        </EventSearchContextProvider>
     </section>
   );
 }
