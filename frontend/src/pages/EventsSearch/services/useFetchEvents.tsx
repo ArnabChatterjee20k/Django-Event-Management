@@ -3,7 +3,7 @@ import queryEvent from "../utils/queryEvent";
 import SettingsType from "../types/SettingsType";
 
 export default function useFetchEvents() {
-  const {mutate,data,isSuccess,isError,isPending} = useMutation({
+  const {mutate,data,isSuccess,isError,isPending,error} = useMutation({
     mutationFn: (body: SettingsType) => queryEvent(body),
   });
 
@@ -11,5 +11,5 @@ export default function useFetchEvents() {
     return mutate(body);
   };
 
-  return {queryEvents,data,isSuccess,isError,isPending}
+  return {queryEvents,data,isSuccess,isError,isPending,error}
 }

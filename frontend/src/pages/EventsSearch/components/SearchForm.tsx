@@ -5,17 +5,45 @@ import AutoLocationCheckBox from "./AutoLocationCheckBox";
 import Button from "../../../components/Button/Button";
 import { useEventSearchContext } from "../context/EventSearchContextProvider";
 import useFetchEvents from "../services/useFetchEvents";
+import EventTable from "./EventTable";
+import EventSearchResponse from "../types/EventSearchResponse";
+import EmptyResultIndicator from "./EmptyResultIndicator";
+const dummy = [
+  {
+    id: "G5vGZ9seQb3Ba",
+    event:
+      "2023-24 Hungry Jacks NBL Season - Illawarra Hawks v Tas JackJumpers",
+    date_time: "2023-12-23T06:30:00Z",
+    genre: "Basketball",
+    venue: "WIN Entertainment Centre",
+    icon: "https://s1.ticketm.net/dam/a/b1a/76093d42-4c4a-425e-98b6-1391fe893b1a_1495931_RETINA_PORTRAIT_16_9.jpg",
+  },
+  {
+    id: "G5vGZ9seQb3Ba",
+    event:
+      "2023-24 Hungry Jacks NBL Season - Illawarra Hawks v Tas JackJumpers",
+    date_time: "2023-12-23T06:30:00Z",
+    genre: "Basketball",
+    venue: "WIN Entertainment Centre",
+    icon: "https://s1.ticketm.net/dam/a/b1a/76093d42-4c4a-425e-98b6-1391fe893b1a_1495931_RETINA_PORTRAIT_16_9.jpg",
+  },
+];
 
 export default function SearchForm() {
   const { searchSettings, updateSettings, resetSettingsToDefault } =
     useEventSearchContext();
-  const {queryEvents,data,isSuccess} = useFetchEvents()
+  const { queryEvents, data, isSuccess, isError, error } = useFetchEvents();
+  isError && console.log(error);
+
   return (
     <div className="py-8">
-      <Form.Root className="w-[600px] mx-auto  bg-slate-900 px-12 py-12 rounded-lg" onSubmit={(e)=>{
-        e.preventDefault()
-        queryEvents(searchSettings)
-      }}>
+      <Form.Root
+        className="w-[600px] mx-auto  bg-slate-900 px-12 py-12 rounded-lg"
+        onSubmit={(e) => {
+          e.preventDefault();
+          queryEvents(searchSettings);
+        }}
+      >
         <h1 className="text-white text-4xl text-center">Events Search</h1>
         <hr className="my-4" />
         <Input
@@ -50,9 +78,14 @@ export default function SearchForm() {
           <Form.Submit>
             <Button className="bg-red-500">SUBMIT</Button>
           </Form.Submit>
-          <Button onClick={resetSettingsToDefault} className="bg-blue-500">CLEAR</Button>
+          <Button onClick={resetSettingsToDefault} className="bg-blue-500">
+            CLEAR
+          </Button>
         </div>
       </Form.Root>
+      {isSuccess && data?.length === 0 && <EmptyResultIndicator />}
+      {isSuccess && <EventTable data={[] as EventSearchResponse[]} />}
+      <EventTable data={dummy as EventSearchResponse[]} />
     </div>
   );
 }

@@ -13,5 +13,5 @@ export default async (body: SettingsType) => {
     },
   });
 
-  return responseHandler<EventSearchResponse>(res)
+  return responseHandler<EventSearchResponse[]>(res)
 };
