@@ -6,6 +6,11 @@ class EventSearchSerialiser(Serializer):
     category = ChoiceField(choices=["default","sports","music"])
     location = CharField()
 
+    def to_internal_value(self, data):
+        if "category" in data:
+            data["category"] = data["category"].lower()
+        return super().to_internal_value(data)
+
 class EventSearchOutputSerialiser(Serializer):
     id = CharField()
     event = CharField()

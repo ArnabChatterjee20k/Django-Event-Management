@@ -17,8 +17,11 @@ class Events:
             "unit":"miles",
             "geoPoint":self.map_client.get_geocode(location)
         }
-        all_events = self._get_all_events(eventSearchParams).get("_embedded").get("events")
-        
+        events_source = self._get_all_events(eventSearchParams).get("_embedded")
+        if not events_source:
+            return []
+    
+        all_events = events_source.get("events")
         
         all_events_data_with_required_fields = EventSearchOutputSerialiser(data=all_events,many=True)
         all_events_data_with_required_fields.is_valid(raise_exception=True)
@@ -39,4 +42,5 @@ class Events:
         base = f"{self.API_URL}/{endpoint}?apikey={self.API_KEY}&size=20"
         for key in kwargs:
             base+=f"&{key}={kwargs[key]}"
+        print(base)
         return base

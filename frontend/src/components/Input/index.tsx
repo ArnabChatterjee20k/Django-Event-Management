@@ -14,8 +14,8 @@ export default function index({
         <Form.Label className="text-[15px] leading-[35px] text-white">
           {label}
         </Form.Label>
-        <Form.Message className="text-[13px] text-black" match="valueMissing">
-          {message}
+        <Form.Message className="text-[13px] text-red-200" match="valueMissing">
+          {value?.toString().trim() === "" && message}
         </Form.Message>
       </div>
       <Form.Control asChild>

@@ -4,13 +4,18 @@ import Category from "./Category";
 import AutoLocationCheckBox from "./AutoLocationCheckBox";
 import Button from "../../../components/Button/Button";
 import { useEventSearchContext } from "../context/EventSearchContextProvider";
+import useFetchEvents from "../services/useFetchEvents";
 
 export default function SearchForm() {
   const { searchSettings, updateSettings, resetSettingsToDefault } =
     useEventSearchContext();
+  const {queryEvents,data,isSuccess} = useFetchEvents()
   return (
     <div className="py-8">
-      <Form.Root className="w-[600px] mx-auto  bg-slate-900 px-12 py-12 rounded-lg">
+      <Form.Root className="w-[600px] mx-auto  bg-slate-900 px-12 py-12 rounded-lg" onSubmit={(e)=>{
+        e.preventDefault()
+        queryEvents(searchSettings)
+      }}>
         <h1 className="text-white text-4xl text-center">Events Search</h1>
         <hr className="my-4" />
         <Input
