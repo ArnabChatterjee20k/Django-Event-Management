@@ -1,7 +1,7 @@
 import requests
 import os
 from geolib import geohash
-
+from .fetcher import fetcher
 class Maps:
     def __init__(self):
         self.API_KEY = os.environ.get("X-RapidAPI-Key")
@@ -22,11 +22,8 @@ class Maps:
             "X-RapidAPI-Host": self.API_HOST
         }
         querystring = {"address":address,"language":"en"}
-        res = requests.get(self.API_URL, headers=headers, params=querystring)
-        if res.status_code != 200:
-            raise Exception("Error fetching the geocode")
-
-        data = res.json().get("results")
+        data = fetcher(self.API_URL,error_message="Error fetching the geocode", headers=headers, params=querystring)
+        data = data.get("results")
         if not data:
             raise Exception("No such address found")
         location = data[0].get("location")

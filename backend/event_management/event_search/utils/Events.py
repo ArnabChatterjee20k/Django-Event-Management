@@ -2,7 +2,7 @@ import os
 import requests
 from .Maps import Maps
 from ..serialiser import EventSearchOutputSerialiser
-
+from .fetcher import fetcher
 class Events:
     def __init__(self):
         self.API_KEY = os.environ.get("TICKETMASTER_API_KEY")
@@ -32,10 +32,8 @@ class Events:
     def _get_all_events(self,eventSearchParams):
         endpoint = "events"
         url = self._build_FULL_URL(endpoint,**eventSearchParams)
-        response = requests.get(url)
-        if response.status_code != 200:
-            raise Exception("Error while fetching the events")
-        return response.json()
+        response = fetcher(url,error_message="Error while fetching the events")
+        return response
 
     def _build_FULL_URL(self,endpoint,**kwargs):
         """The structure of TicketMaster HOST/ENDPOINT?apikey={}"""
