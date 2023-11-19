@@ -1,7 +1,7 @@
 import os
 import requests
 from .Maps import Maps
-from ..serialiser import EventSearchOutputSerialiser
+from ..serialiser import EventSearchOutputSerialiser , EventDetailsSerialiser
 from .fetcher import fetcher
 class Events:
     def __init__(self):
@@ -34,6 +34,13 @@ class Events:
         url = self._build_FULL_URL(endpoint,**eventSearchParams)
         response = fetcher(url,error_message="Error while fetching the events")
         return response
+
+    def get_event_details_by_id(self,id):
+        url = self._build_FULL_URL(endpoint=f"events/{id}")
+        res = fetcher(url,error_message=f"error while fetching the event {id}")
+        data = EventDetailsSerialiser(data=res)
+        data.is_valid(raise_exception=True)
+        return data.validated_data
 
     def _build_FULL_URL(self,endpoint,**kwargs):
         """The structure of TicketMaster HOST/ENDPOINT?apikey={}"""

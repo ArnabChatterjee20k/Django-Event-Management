@@ -17,3 +17,9 @@ def getData(request):
         "location":valid_event_data.get("location"),
     }
     return Response(event.get_all_events(**params))
+
+@api_view(["GET"])
+def getDetailsOfEventById(request,id):
+    event = Events()
+    data = event.get_event_details_by_id(id)
+    return Response(data)
