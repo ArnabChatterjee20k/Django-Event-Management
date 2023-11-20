@@ -34,16 +34,15 @@ const dummy = [
 export default function SearchForm() {
   const { searchSettings, updateSettings, resetSettingsToDefault } =
     useEventSearchContext();
-  const { queryEvents, data, isSuccess, isError, error } = useFetchEvents();
-  isError && console.log(error);
+  const { queryEvents, data, isSuccess, isError, error,isPending } = useFetchEvents();
 
-  const {pathname} = useLocation()
   return (
     <div className="py-8">
       <Form.Root
         className="w-[600px] mx-auto backdrop-blur-sm bg-white/30 px-12 py-12 rounded-lg"
         onSubmit={(e) => {
           e.preventDefault();
+          if(isPending) return
           queryEvents(searchSettings);
         }}
       >
@@ -78,8 +77,8 @@ export default function SearchForm() {
         />
         <AutoLocationCheckBox />
         <div className="flex gap-6 w-full justify-center mt-6">
-          <Form.Submit>
-            <Button className="bg-red-500">SUBMIT</Button>
+          <Form.Submit >
+            <Button className={`bg-red-500 ${isPending && "bg-red-300"}`}>{isPending?"Loading..":"SUBMIT"}</Button>
           </Form.Submit>
           <Button onClick={resetSettingsToDefault} className="bg-blue-500">
             CLEAR
