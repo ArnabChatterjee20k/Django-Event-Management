@@ -23,7 +23,7 @@ interface statusProps {
 export function EventTextField({ headline, text }: props) {
   if (text.trim() === "") return null;
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       <Headline headline={headline} />
       <Text text={text} />
     </div>
@@ -33,7 +33,7 @@ export function EventTextField({ headline, text }: props) {
 export function EventLinkField({ headline, text, href }: props) {
   if (text.trim() === "") return null;
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       <Headline headline={headline} />
       <Link text={text} href={href || "#"} />
     </div>
@@ -42,7 +42,7 @@ export function EventLinkField({ headline, text, href }: props) {
 
 export function EventSaleField({ headline, ticketstatus }: statusProps) {
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-2 w-full">
       <Headline headline={headline} />
       <div
         className="p-2 font-medium rounded-lg text-white uppercase"
@@ -64,7 +64,7 @@ export function EventCollapsable({ headline, text }: props) {
   const [show, setShow] = useState(false);
   if(!text) return null
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       <Headline headline={headline} />
       <Text text={show ? text : text.substring(0, 100)} />
       {!(text.length <= 200) && (

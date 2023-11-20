@@ -46,6 +46,8 @@ class Events:
         """The structure of TicketMaster HOST/ENDPOINT?apikey={}"""
         base = f"{self.API_URL}/{endpoint}?apikey={self.API_KEY}&size=20"
         for key in kwargs:
+            if key=="classificationName" and kwargs[key]=="default":
+                continue
             base+=f"&{key}={kwargs[key]}"
         print(base)
         return base

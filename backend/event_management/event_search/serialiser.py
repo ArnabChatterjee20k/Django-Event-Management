@@ -4,7 +4,7 @@ from .utils.joinStringBySep import joinStringBySep
 class EventSearchSerialiser(Serializer):
     keyword = CharField()
     distance = IntegerField()
-    category = ChoiceField(choices=["default","sports","music"])
+    category = ChoiceField(choices=["default","sports","music","arts&theatre","film","miscellaneous"])
     location = CharField()
 
     def to_internal_value(self, data):
