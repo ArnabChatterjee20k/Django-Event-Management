@@ -2,6 +2,7 @@ import useEventDetails from "../../services/useEventDetails";
 import { useParams, Outlet } from "react-router-dom";
 import EventTabs from "./EventTabs";
 import BackButton from "./BackButton";
+import EventName from "./EventName";
 
 export default function index() {
   const { id } = useParams();
@@ -11,10 +12,11 @@ export default function index() {
       <div className="w-full px-10 py-5">
         <BackButton />
       </div>
-      <EventTabs />
-      <div className="px-12 py-8">
-        {data && <Outlet />}
+      <div className="px-10 py-8">
+        <EventName />
       </div>
+      <EventTabs />
+      <div className="px-12 py-8">{data && <Outlet />}</div>
     </div>
   );
 }
