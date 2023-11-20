@@ -62,7 +62,7 @@ export function EventSaleField({ headline, ticketstatus }: statusProps) {
 
 export function EventCollapsable({ headline, text }: props) {
   const [show, setShow] = useState(false);
-
+  if(!text) return null
   return (
     <div className="flex flex-col items-center">
       <Headline headline={headline} />

@@ -34,8 +34,8 @@ const dummy = {
 export default function useEventDetails(id:string){
     return useQuery<EventDetails>({
         queryKey:[`event-details-${id}`],
-        // queryFn:()=>queryEventDetails(id),
-        queryFn:()=>Promise.resolve(dummy),
+        queryFn:()=>queryEventDetails(id),
+        // queryFn:()=>Promise.resolve(dummy),
         staleTime:Infinity,
         refetchOnMount:false,
         retry:false
