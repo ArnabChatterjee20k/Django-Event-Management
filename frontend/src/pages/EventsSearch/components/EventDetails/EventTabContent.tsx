@@ -1,6 +1,6 @@
 import useEventDetails from "../../services/useEventDetails";
 import { useParams } from "react-router-dom";
-import { EventLinkField, EventTextField } from "./EventField";
+import { EventLinkField, EventTextField, EventSaleField } from "./EventField";
 
 export default function EventTabContent() {
   const { id } = useParams();
@@ -21,6 +21,10 @@ export default function EventTabContent() {
         <EventTextField
           headline="Date"
           text={`${data?.price_ranges.min} - ${data?.price_ranges.max} USD`}
+        />
+        <EventSaleField
+          headline="Ticket Status"
+          ticketstatus={data?.ticket_status}
         />
         <EventLinkField
           headline="Buy Ticket At"

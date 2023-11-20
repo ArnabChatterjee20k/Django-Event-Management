@@ -7,8 +7,8 @@ export default function index() {
   const { id } = useParams();
   const { data } = useEventDetails(id as string);
   return (
-    <div className="w-[880px] backdrop-blur-sm bg-white/30  mx-auto mt-[5rem]">
-      <div className="w-full px-4 py-5">
+    <div className="w-[880px] backdrop-blur-sm bg-white/10  mx-auto mt-[5rem]">
+      <div className="w-full px-10 py-5">
         <BackButton />
       </div>
       <EventTabs />

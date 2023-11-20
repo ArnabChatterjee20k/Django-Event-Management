@@ -8,7 +8,7 @@ const sectionStyle = {
 };
 export default function App() {
   return (
-    <main style={sectionStyle} className="bg-cover min-h-screen pb-2">
+    <main style={{...sectionStyle}} className="bg-cover min-h-screen pb-2">
       <BrowserRouter >
         <Router/>
       </BrowserRouter>
