@@ -1,16 +1,12 @@
-import BackgroundImage from "../../assets/background.jpg";
 import SearchForm from "./components/SearchForm";
 import EventSearchContextProvider from "./context/EventSearchContextProvider";
-
+import {Outlet} from "react-router-dom"
 export default function Index() {
-  const sectionStyle = {
-    backgroundImage: `url(${BackgroundImage})`,
-  };
-
   return (
-    <section className="min-h-screen bg-cover" style={sectionStyle}>
+    <section>
         <EventSearchContextProvider>
             <SearchForm />
+            <Outlet/>
         </EventSearchContextProvider>
     </section>
   );

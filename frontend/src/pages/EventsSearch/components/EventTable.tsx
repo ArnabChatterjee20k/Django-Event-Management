@@ -3,6 +3,7 @@ import EventSearchResponse from "../types/EventSearchResponse";
 import EventTableText from "./EventTableText";
 import EventTableImage from "./EventTableImage";
 import EventTableDate from "./EventTableDate";
+import useCurrentSearchedEvent from "../services/useCurrentSearchedEvent";
 
 const columns: TableColumn<EventSearchResponse>[] = [
   {
@@ -34,40 +35,18 @@ const columns: TableColumn<EventSearchResponse>[] = [
     sortable:true
   },
 ];
-const data = [
-  {
-    id: "G5vGZ9seQb3Ba",
-    event:
-      "2023-24 Hungry Jacks NBL Season - Illawarra Hawks v Tas JackJumpers",
-    date_time: "2023-12-23T06:30:00Z",
-    genre: "Basketball",
-    venue: "WIN Entertainment Centre",
-    icon: "https://s1.ticketm.net/dam/a/b1a/76093d42-4c4a-425e-98b6-1391fe893b1a_1495931_RETINA_PORTRAIT_16_9.jpg",
-  },
-  {
-    id: "G5vGZ9seQb3Ba",
-    event:
-      "2023-24 Hungry Jacks NBL Season - Illawarra Hawks v Tas JackJumpers",
-    date_time: "2023-12-23T06:30:00Z",
-    genre: "Basketball",
-    venue: "WIN Entertainment Centre",
-    icon: "https://s1.ticketm.net/dam/a/b1a/76093d42-4c4a-425e-98b6-1391fe893b1a_1495931_RETINA_PORTRAIT_16_9.jpg",
-  },
-];
 
-interface Props {
-  data: EventSearchResponse[];
-}
-
-export default function EventTable({ data }: Props) {
+export default function EventTable() {
+  const {data} = useCurrentSearchedEvent()
+  if(!data || data?.length===0) return null
   return (
     <DataTable
       columns={columns}
-      data={data}
+      data={data as EventSearchResponse[]}
       striped // for odd rows
       customStyles={{
         table: {
-          style: { width: "880px", marginInline: "auto", marginTop: "4rem" },
+          style: { width: "880px", marginInline: "auto", marginBlock: "4rem" },
         },
         rows: {
           style: {

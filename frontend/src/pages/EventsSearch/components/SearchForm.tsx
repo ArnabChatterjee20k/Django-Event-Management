@@ -8,6 +8,8 @@ import useFetchEvents from "../services/useFetchEvents";
 import EventTable from "./EventTable";
 import EventSearchResponse from "../types/EventSearchResponse";
 import EmptyResultIndicator from "./EmptyResultIndicator";
+import {Outlet,useLocation} from "react-router-dom"
+
 const dummy = [
   {
     id: "G5vGZ9seQb3Ba",
@@ -35,10 +37,11 @@ export default function SearchForm() {
   const { queryEvents, data, isSuccess, isError, error } = useFetchEvents();
   isError && console.log(error);
 
+  const {pathname} = useLocation()
   return (
     <div className="py-8">
       <Form.Root
-        className="w-[600px] mx-auto  bg-slate-900 px-12 py-12 rounded-lg"
+        className="w-[600px] mx-auto backdrop-blur-sm bg-white/30 px-12 py-12 rounded-lg"
         onSubmit={(e) => {
           e.preventDefault();
           queryEvents(searchSettings);
@@ -84,8 +87,6 @@ export default function SearchForm() {
         </div>
       </Form.Root>
       {isSuccess && data?.length === 0 && <EmptyResultIndicator />}
-      {isSuccess && <EventTable data={[] as EventSearchResponse[]} />}
-      <EventTable data={dummy as EventSearchResponse[]} />
     </div>
   );
 }
