@@ -79,7 +79,7 @@ class EventDetailsSerialiser(Serializer):
 
         obj["ticket_status"] = getter(data, "dates.status.code")
 
-        obj["open_hours"] = getter(data,"_embedded.boxOfficeInfo.openHoursDetail")
+        obj["open_hours"] = getter(data,"_embedded.venues.0.boxOfficeInfo.openHoursDetail")
         
         obj["phone_number"] = getter(data,"_embedded.venues.0.boxOfficeInfo.phoneNumberDetail")
         

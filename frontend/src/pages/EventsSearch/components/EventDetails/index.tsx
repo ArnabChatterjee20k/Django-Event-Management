@@ -12,7 +12,7 @@ export default function index() {
         <BackButton />
       </div>
       <EventTabs />
-      <div className="px-12 py-5">
+      <div className="px-12 py-8">
         {data && <Outlet />}
       </div>
     </div>
