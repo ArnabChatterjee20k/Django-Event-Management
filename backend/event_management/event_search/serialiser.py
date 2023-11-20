@@ -31,8 +31,8 @@ class EventSearchOutputSerialiser(Serializer):
         return super().to_internal_value(obj)
 
 class EventDetailsSerialiser(Serializer):
-    name : CharField(allow_blank=True,default="")
     date_time = DictField(default={})
+    name = CharField()
     artists_team = CharField(allow_blank=True,default="")
     venue = DictField(default={})
     genre = CharField(allow_blank=True,default="")
@@ -48,7 +48,7 @@ class EventDetailsSerialiser(Serializer):
 
     def to_internal_value(self, data):
         obj = dict()
-        obj["name"] = getter(data, "name")
+        obj["name"] = data.get("name")
         obj["ticket_link"] = getter(data, "url")
 
         dates = getter(data, "dates.start")

@@ -3,6 +3,7 @@ export default interface EventDetails {
     localDate: string;
     localTime: string;
   };
+  name: string;
   artists_team: string;
   venue: {
     name: string;
