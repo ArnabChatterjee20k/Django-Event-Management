@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.validators import ValidationError
 from rest_framework.decorators import api_view
 from .utils.Events import Events
-from .serialiser import EventSearchSerialiser , EventSearchWithLocationSerialiser
+from .serialiser import EventSearchSerialiser , EventSearchWithLocationSerialiser 
 
 @api_view(["POST"])
 def getData(request):
@@ -23,6 +23,7 @@ def getData(request):
         data = EventSearchSerialiser(data = request.data)
     if not data.is_valid(raise_exception=True):
         return Response(status=400)
+    # grab the longitude and latitude if auto is true and then turn it into a geohash
     valid_event_data = data.validated_data
     params = {
         "keyword":valid_event_data.get("keyword"),
@@ -30,6 +31,7 @@ def getData(request):
         "distance":valid_event_data.get("distance"),
         "location":valid_event_data.get("location"),
     }
+    
     return Response(event.get_all_events(**params))
 
 @api_view(["GET"])

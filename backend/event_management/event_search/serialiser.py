@@ -1,10 +1,7 @@
-from rest_framework.serializers import Serializer ,CharField , IntegerField , ChoiceField ,DictField
+from rest_framework.serializers import Serializer ,CharField , IntegerField,FloatField , ChoiceField ,DictField
 from .utils.getter import getter
 from .utils.joinStringBySep import joinStringBySep
 
-class LocationSerialiser(Serializer):
-    lat:IntegerField()
-    long:IntegerField()
 class BaseEventSearchSerialiser(Serializer):
     keyword = CharField()
     distance = IntegerField()
@@ -16,7 +13,10 @@ class BaseEventSearchSerialiser(Serializer):
 class EventSearchSerialiser(BaseEventSearchSerialiser):
     location = CharField()
 class EventSearchWithLocationSerialiser(BaseEventSearchSerialiser):
-    location = LocationSerialiser()
+    location = DictField(child = FloatField())
+    def to_internal_value(self, data):
+        print(data)
+        return super().to_internal_value(data)
 class EventSearchOutputSerialiser(Serializer):
     id = CharField()
     event = CharField()
