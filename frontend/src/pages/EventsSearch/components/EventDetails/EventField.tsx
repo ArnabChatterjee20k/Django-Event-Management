@@ -87,7 +87,7 @@ function Text({ text }: { text: string }) {
   return <p className="whitespace-normal text-gray-300 text-center">{text}</p>;
 }
 
-function Link({ text, href }: { text: string; href: string }) {
+export function Link({ text, href }: { text: string; href: string }) {
   return (
     <a href={href} className="whitespace-normal underline text-cyan-400">
       {text}

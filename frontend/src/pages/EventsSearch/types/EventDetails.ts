@@ -1,10 +1,14 @@
+interface ArtistTeam{
+  name:string,
+  url:string
+}
 export default interface EventDetails {
   date_time: {
     localDate: string;
     localTime: string;
   };
   name: string;
-  artists_team: string;
+  artists_team: ArtistTeam[];
   venue: {
     name: string;
     city: string;

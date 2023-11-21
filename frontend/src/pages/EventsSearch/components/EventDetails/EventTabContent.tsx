@@ -1,6 +1,11 @@
 import useEventDetails from "../../services/useEventDetails";
 import { useParams } from "react-router-dom";
-import { EventLinkField, EventTextField, EventSaleField } from "./EventField";
+import {
+  EventLinkField,
+  EventTextField,
+  EventSaleField,
+  Link,
+} from "./EventField";
 import EventShare from "./EventShare";
 
 export default function EventTabContent() {
@@ -14,10 +19,7 @@ export default function EventTabContent() {
             headline="Date"
             text={`${data?.date_time.localDate} ${data?.date_time.localTime}`}
           />
-          <EventTextField
-            headline="Artists/Team"
-            text={data?.artists_team as string}
-          />
+          <Artist_team />
           <EventTextField headline="Venue" text={data?.venue.name as string} />
           <EventTextField headline="Genres" text={data?.genre as string} />
           <EventTextField
@@ -42,7 +44,27 @@ export default function EventTabContent() {
           />
         </div>
       </div>
-        <EventShare />
+      <EventShare />
     </div>
   );
 }
+
+const Artist_team = () => {
+  const { id } = useParams();
+  const { data } = useEventDetails(id as string);
+
+  if (!data?.artists_team || data?.artists_team.length === 0) return null;
+
+  return (
+    <div className="flex gap-1 flex-wrap items-center">
+      {data?.artists_team.map((artist, index, team) => (
+        <>
+          <Link href={artist.url} text={artist.name} />
+          {index !== team.length - 1 && (
+            <span className="text-cyan-400">|</span>
+          )}
+        </>
+      ))}
+    </div>
+  );
+};
