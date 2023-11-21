@@ -5,5 +5,6 @@ export default interface InputProps {
   type: PrimitiveInputProps["type"];
   value: PrimitiveInputProps["value"];
   name?: string;
+  disabled?:boolean;
   onChange?: PrimitiveInputProps["onChange"];
 }

@@ -5,10 +5,7 @@ import AutoLocationCheckBox from "./AutoLocationCheckBox";
 import Button from "../../../components/Button/Button";
 import { useEventSearchContext } from "../context/EventSearchContextProvider";
 import useFetchEvents from "../services/useFetchEvents";
-import EventTable from "./EventTable";
-import EventSearchResponse from "../types/EventSearchResponse";
 import EmptyResultIndicator from "./EmptyResultIndicator";
-import {Outlet,useLocation} from "react-router-dom"
 
 const dummy = [
   {
@@ -34,7 +31,8 @@ const dummy = [
 export default function SearchForm() {
   const { searchSettings, updateSettings, resetSettingsToDefault } =
     useEventSearchContext();
-  const { queryEvents, data, isSuccess, isError, error,isPending } = useFetchEvents();
+  const { queryEvents, data, isSuccess, isError, error, isPending } =
+    useFetchEvents();
 
   return (
     <div className="py-8">
@@ -42,7 +40,7 @@ export default function SearchForm() {
         className="w-[600px] mx-auto backdrop-blur-sm bg-white/30 px-12 py-12 rounded-lg"
         onSubmit={(e) => {
           e.preventDefault();
-          if(isPending) return
+          if (isPending) return;
           queryEvents(searchSettings);
         }}
       >
@@ -69,16 +67,19 @@ export default function SearchForm() {
         </div>
         <Input
           onChange={updateSettings}
+          disabled={searchSettings.autoLocationEnabled}
           name="location"
-          value={searchSettings.location}
+          value={searchSettings.location as string}
           label="Location"
           type="text"
           message="Please enter the location"
         />
         <AutoLocationCheckBox />
         <div className="flex gap-6 w-full justify-center mt-6">
-          <Form.Submit >
-            <Button className={`bg-red-500 ${isPending && "bg-red-300"}`}>{isPending?"Loading..":"SUBMIT"}</Button>
+          <Form.Submit>
+            <Button className={`bg-red-500 ${isPending && "bg-red-300"}`}>
+              {isPending ? "Loading.." : "SUBMIT"}
+            </Button>
           </Form.Submit>
           <Button onClick={resetSettingsToDefault} className="bg-blue-500">
             CLEAR

@@ -1,7 +1,7 @@
 import config from "../../../config";
 import responseHandler from "../../../utils/responseHandler";
 import EventSearchResponse from "../types/EventSearchResponse";
-import SettingsType, { SettingsWithAutoSearch } from "../types/SettingsType";
+import  { SettingsWithAutoSearch } from "../types/SettingsType";
 export default async (curentSearchQuery: SettingsWithAutoSearch) => {
   const {
     API_HOST,
