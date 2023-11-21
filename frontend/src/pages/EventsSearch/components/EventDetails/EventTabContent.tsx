@@ -5,6 +5,7 @@ import {
   EventTextField,
   EventSaleField,
   Link,
+  Headline,
 } from "./EventField";
 import EventShare from "./EventShare";
 
@@ -56,15 +57,18 @@ const Artist_team = () => {
   if (!data?.artists_team || data?.artists_team.length === 0) return null;
 
   return (
-    <div className="flex gap-1 flex-wrap items-center">
-      {data?.artists_team.map((artist, index, team) => (
-        <>
-          <Link href={artist.url} text={artist.name} />
-          {index !== team.length - 1 && (
-            <span className="text-cyan-400">|</span>
-          )}
-        </>
-      ))}
+    <div className="flex flex-col items-center gap-2 w-full">
+      <Headline headline="Artist/Team" />
+      <div className="flex gap-1 flex-wrap items-center">
+        {data?.artists_team.map((artist, index, team) => (
+          <>
+            <Link href={artist.url} text={artist.name} />
+            {index !== team.length - 1 && (
+              <span className="text-cyan-400">|</span>
+            )}
+          </>
+        ))}
+      </div>
     </div>
   );
 };

@@ -79,7 +79,7 @@ export function EventCollapsable({ headline, text }: props) {
   );
 }
 
-function Headline({ headline }: { headline: string }) {
+export function Headline({ headline }: { headline: string }) {
   return <h4 className="font-bold text-white">{headline}</h4>;
 }
 
