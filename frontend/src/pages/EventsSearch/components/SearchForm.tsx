@@ -6,6 +6,8 @@ import Button from "../../../components/Button/Button";
 import { useEventSearchContext } from "../context/EventSearchContextProvider";
 import useFetchEvents from "../services/useFetchEvents";
 import EmptyResultIndicator from "./EmptyResultIndicator";
+import queryLocationAndFetchEvents from "../services/queryLocationAndFetchEvents";
+import CurrentLocationDetails from "../../../types/CurrentLocationDetails";
 
 const dummy = [
   {
@@ -34,6 +36,16 @@ export default function SearchForm() {
   const { queryEvents, data, isSuccess, isError, error, isPending } =
     useFetchEvents();
 
+  const { getCurrentLocationDetails } = queryLocationAndFetchEvents();
+
+  function handleSubmit() {
+    if (searchSettings.autoLocationEnabled) {
+      getCurrentLocationDetails(searchSettings);
+      return;
+    }
+    queryEvents(searchSettings);
+  }
+
   return (
     <div className="py-8">
       <Form.Root
@@ -41,7 +53,7 @@ export default function SearchForm() {
         onSubmit={(e) => {
           e.preventDefault();
           if (isPending) return;
-          queryEvents(searchSettings);
+          handleSubmit();
         }}
       >
         <h1 className="text-white text-4xl text-center">Events Search</h1>

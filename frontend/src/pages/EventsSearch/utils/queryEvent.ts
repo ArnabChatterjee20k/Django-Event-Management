@@ -2,7 +2,8 @@ import config from "../../../config";
 import responseHandler from "../../../utils/responseHandler";
 import EventSearchResponse from "../types/EventSearchResponse";
 import  { SettingsWithAutoSearch } from "../types/SettingsType";
-export default async (curentSearchQuery: SettingsWithAutoSearch) => {
+import type Coordinates from "../types/Coordinates";
+export default async (curentSearchQuery: SettingsWithAutoSearch,location?:Coordinates|null) => {
   const {
     API_HOST,
     EVENT_ENDPOINT,
@@ -22,6 +23,7 @@ export default async (curentSearchQuery: SettingsWithAutoSearch) => {
       EVENT_ENDPOINT_WITHOUT_AUTO_SEARCH_PARAM.val
     );
   const {autoLocationEnabled, ...body} = curentSearchQuery
+  if(location) body.location = location
   const res = await fetch(url, {
     method: "post",
     body: JSON.stringify(body),
