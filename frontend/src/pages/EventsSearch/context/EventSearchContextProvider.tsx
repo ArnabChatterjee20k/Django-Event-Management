@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, ChangeEvent } from "react";
 import DEFAULT_SEARCH_SETTINGS from "../data/SearchSettings";
 import SettingsContextType from "../types/SettingsContextType";
-import SettingsType from "../types/SettingsType";
-
 const EventSearchContext = createContext<SettingsContextType>({
   searchSettings: DEFAULT_SEARCH_SETTINGS,
 });
@@ -21,8 +19,9 @@ export default function EventSearchContextProvider({
   ) {
     if (typeof e === "object") {
       const target = e.target.name;
+      const type = e.target.type
       setSearchSettings((prevSettings) => {
-        const updatedValue = (e as ChangeEvent<HTMLInputElement>).target.value;
+        const updatedValue = type==="checkbox"?e.target.checked:(e as ChangeEvent<HTMLInputElement>).target.value;
         return { ...prevSettings, [target]: updatedValue };
       });
     } else {

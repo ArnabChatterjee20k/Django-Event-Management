@@ -1,10 +1,27 @@
 import config from "../../../config";
 import responseHandler from "../../../utils/responseHandler";
-import SettingsType from "../types/SettingsType";
 import EventSearchResponse from "../types/EventSearchResponse";
-export default async (body: SettingsType) => {
-  const { API_HOST, EVENT_ENDPOINT } = config;
-  const url = API_HOST + EVENT_ENDPOINT;
+import SettingsType, { SettingsWithAutoSearch } from "../types/SettingsType";
+export default async (curentSearchQuery: SettingsWithAutoSearch) => {
+  const {
+    API_HOST,
+    EVENT_ENDPOINT,
+    EVENT_ENDPOINT_AUTO_SEARCH_PARAM,
+    EVENT_ENDPOINT_WITHOUT_AUTO_SEARCH_PARAM,
+  } = config;
+  const url = new URL(API_HOST);
+  url.pathname = EVENT_ENDPOINT;
+  if (curentSearchQuery.autoLocationEnabled)
+    url.searchParams.set(
+      EVENT_ENDPOINT_AUTO_SEARCH_PARAM.param,
+      EVENT_ENDPOINT_AUTO_SEARCH_PARAM.val
+    );
+  else
+    url.searchParams.set(
+      EVENT_ENDPOINT_WITHOUT_AUTO_SEARCH_PARAM.param,
+      EVENT_ENDPOINT_WITHOUT_AUTO_SEARCH_PARAM.val
+    );
+  const {autoLocationEnabled, ...body} = curentSearchQuery
   const res = await fetch(url, {
     method: "post",
     body: JSON.stringify(body),
@@ -13,5 +30,5 @@ export default async (body: SettingsType) => {
     },
   });
 
-  return responseHandler<EventSearchResponse[]>(res)
+  return responseHandler<EventSearchResponse[]>(res);
 };
