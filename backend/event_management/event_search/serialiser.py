@@ -1,4 +1,4 @@
-from rest_framework.serializers import Serializer ,CharField , IntegerField,FloatField , ChoiceField ,DictField
+from rest_framework.serializers import Serializer ,CharField , IntegerField,FloatField , ChoiceField ,DictField,ListField
 from .utils.getter import getter
 from .utils.joinStringBySep import joinStringBySep
 
@@ -38,7 +38,7 @@ class EventSearchOutputSerialiser(Serializer):
 class EventDetailsSerialiser(Serializer):
     date_time = DictField(default={})
     name = CharField()
-    artists_team = CharField(allow_blank=True,default="")
+    artists_team = ListField(default=[])
     venue = DictField(default={})
     genre = CharField(allow_blank=True,default="")
     price_ranges = DictField(default={})
@@ -61,6 +61,12 @@ class EventDetailsSerialiser(Serializer):
             "localDate": getter(dates, "localDate"),
             "localTime": getter(dates, "localTime"),
         }
+
+        artists_team = getter(data,"_embedded.attractions",default=[])
+        team = []
+        for artist in artists_team:
+            team.append({"name":getter(artist,"name"),"url":getter(artist,"url")})
+        obj["artists_team"] = team
 
         venue = getter(data, "_embedded.venues.0")
         obj["venue"] = {
