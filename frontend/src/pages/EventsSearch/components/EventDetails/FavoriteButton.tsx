@@ -8,9 +8,15 @@ export default function FavoriteButton() {
   const { id } = useParams();
   const { data } = useEventDetails(id as string);
 
-  const { addToFavoites } = useFavorites();
+  const { addToFavoites, favorites, deleteFromStorage } = useFavorites();
   function handleSubmit() {
+    if (id && favorites && id in favorites) {
+      deleteFromStorage(id);
+      return;
+    }
+
     const event: FavoriteEvent = {
+      id: id as string,
       name: data?.name as string,
       category: data?.genre as string,
       data_time: `${data?.date_time.localDate} ${data?.date_time.localTime}`,
@@ -21,7 +27,7 @@ export default function FavoriteButton() {
   return (
     <div className="p-2 bg-white rounded-full border-4 border-cyan-400">
       <Heart
-        fill="transparent"
+        fill={id && favorites && id in favorites ? "red" : "transparent"}
         stroke="red"
         height={32}
         width={32}

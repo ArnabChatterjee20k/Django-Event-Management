@@ -4,7 +4,7 @@ import EventTable from "./pages/EventsSearch/components/EventTable";
 import EventDetails from "./pages/EventsSearch/components/EventDetails";
 import EventTabContent from "./pages/EventsSearch/components/EventDetails/EventTabContent";
 import VenueTabContent from "./pages/EventsSearch/components/EventDetails/VenueTabContent";
-
+import Favorites from "./pages/Favorites"
 export default function Router() {
   return (
     <Routes>
@@ -16,6 +16,7 @@ export default function Router() {
           <Route path="venue" element={<VenueTabContent />} />
         </Route>
       </Route>
+      <Route path="/user/favourite" element={<Favorites/>}/>
     </Routes>
   );
 }

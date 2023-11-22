@@ -1,25 +1,49 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FavoriteEvent, FavoriteStorage } from "../types/FavoriteStorage";
 import { Favorites } from "../utils/Favorites";
 export default function useFavorites() {
-  const { data: favorites } = useQuery<FavoriteStorage>({
+  const client = useQueryClient();
+  const {
+    data: favorites,
+    isSuccess: isFavouritesFetched,
+    isLoading: isFavouritesLoading,
+  } = useQuery<FavoriteStorage>({
     queryKey: ["favourites"],
     queryFn: () => Promise.resolve(Favorites.getFromStorage()),
     staleTime: Infinity,
   });
 
-  const mutator = useMutation({
+  const insertMutator = useMutation({
     mutationFn: (data: FavoriteEvent) =>
       Promise.resolve(Favorites.insertToStorage(data)),
   });
 
+  const deleteMutator = useMutation({
+    mutationFn: (id: string) =>
+      Promise.resolve(Favorites.deleteFromStorage(id)),
+  });
+
   function addToFavoites(data: FavoriteEvent) {
-    mutator.mutate(data, {
+    insertMutator.mutate(data, {
       onSuccess: () => {
-        alert("Added to Favorites");
+        client.invalidateQueries({ queryKey: ["favourites"] });
       },
     });
   }
 
-  return { addToFavoites, favorites };
+  function deleteFromStorage(id: string) {
+    deleteMutator.mutate(id, {
+      onSuccess: () => {
+        client.invalidateQueries({ queryKey: ["favourites"] });
+      },
+    });
+  }
+
+  return {
+    addToFavoites,
+    deleteFromStorage,
+    favorites,
+    isFavouritesFetched,
+    isFavouritesLoading,
+  };
 }
