@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from .utils.Events import Events
 from .utils.Suggestions import Suggestions
 from .serialiser import EventSearchSerialiser , EventSearchWithLocationSerialiser 
+from .utils.EventsCache import EventsCache
 
 @api_view(["POST"])
 def getData(request):
@@ -38,6 +39,10 @@ def getData(request):
 @api_view(["GET"])
 def getDetailsOfEventById(request,id):
     event = Events()
+    cache = EventsCache()
+    is_in_cache = cache.is_event_in_cache(id)
+    if is_in_cache:
+        return Response(is_in_cache)
     data = event.get_event_details_by_id(id)
     return Response(data)
 

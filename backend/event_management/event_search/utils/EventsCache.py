@@ -3,6 +3,7 @@ from .fetcher import async_fetcher
 from os import environ
 from .insert_with_check import insert_with_check
 from .getter import getter
+from ..serialiser import EventDetailsSerialiser
 import asyncio
 import httpx
 
@@ -33,3 +34,10 @@ class EventsCache:
                     self._insert(data)
                 except Exception as e:
                     print("error while insertion")
+    def is_event_in_cache(self,id):
+        data = self.collection.find_one({"id":id})
+        if data:
+            serialiser = EventDetailsSerialiser(data=data)
+            serialiser.is_valid(raise_exception=True)
+            return serialiser.validated_data
+        return None
