@@ -8,3 +8,9 @@ def fetcher(url,error_message="Error while fetching ",**kwargs):
         return res.json()
     except requests.HTTPError as e:
         raise ValidationError({"status":e},code=res.status_code)
+
+async def async_fetcher(client,url,**kwargs):
+    res = await client.get(url,**kwargs)
+    if res.status_code==200:
+        return res.json()
+    return {}

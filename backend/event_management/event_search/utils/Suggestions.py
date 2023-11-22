@@ -3,6 +3,7 @@ from .fetcher import fetcher
 from os import environ
 from ..serialiser import EventDetailsSerialiser , SuggestionSerialiser
 from .getter import getter
+from .insert_with_check import insert_with_check
 class Suggestions:
     def __init__(self):
         self.collection = db["suggestions"]
@@ -12,10 +13,7 @@ class Suggestions:
     def _remove_all(self):
         self.collection.delete_many({})
     def _insert(self,documents):
-        for document in documents:
-            filter_criteria = {'id': document['id']}
-            update_data = {'$set': document}
-            self.collection.update_one(filter_criteria,update_data,upsert=True)
+        insert_with_check(self.collection,documents)
 
     def _get_suggestions(self):
         endpoint = "suggest"
