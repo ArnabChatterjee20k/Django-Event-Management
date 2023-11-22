@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework.validators import ValidationError
 from rest_framework.decorators import api_view
 from .utils.Events import Events
+from .utils.Suggestions import Suggestions
 from .serialiser import EventSearchSerialiser , EventSearchWithLocationSerialiser 
 
 @api_view(["POST"])
@@ -39,3 +40,8 @@ def getDetailsOfEventById(request,id):
     event = Events()
     data = event.get_event_details_by_id(id)
     return Response(data)
+
+@api_view(["GET"])
+def getSuggestion(request):
+    data = Suggestions().send_suggestions()
+    return Response({"suggestions":data})

@@ -97,3 +97,6 @@ class EventDetailsSerialiser(Serializer):
         obj["general_rule"] = getter(data,"_embedded.venues.0.generalInfo.generalRule")
         obj["child_rule"] = getter(data,"_embedded.venues.0.generalInfo.childRule")
         return super().to_internal_value(obj)
+    
+class SuggestionSerialiser(Serializer):
+    name = CharField()
