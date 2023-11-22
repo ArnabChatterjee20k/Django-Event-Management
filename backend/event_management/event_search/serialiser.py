@@ -20,9 +20,9 @@ class EventSearchWithLocationSerialiser(BaseEventSearchSerialiser):
 class EventSearchOutputSerialiser(Serializer):
     id = CharField()
     event = CharField()
-    date_time = CharField()
+    date_time = CharField(allow_blank=True,allow_null=True)
     genre = CharField()
-    venue = CharField()
+    venue = CharField(allow_blank=True,allow_null=True)
     icon = CharField()
     
     def to_internal_value(self, data):
@@ -36,10 +36,10 @@ class EventSearchOutputSerialiser(Serializer):
         return super().to_internal_value(obj)
 
 class EventDetailsSerialiser(Serializer):
-    date_time = DictField(default={})
+    date_time = DictField(default={},allow_empty=True)
     name = CharField()
     artists_team = ListField(default=[])
-    venue = DictField(default={})
+    venue = DictField(default={},allow_empty=True)
     genre = CharField(allow_blank=True,default="")
     price_ranges = DictField(default={})
     ticket_link = CharField(allow_blank=True,default="")
@@ -60,7 +60,7 @@ class EventDetailsSerialiser(Serializer):
         obj["date_time"] = {
             "localDate": getter(dates, "localDate"),
             "localTime": getter(dates, "localTime"),
-        }
+        } if dates else {}
 
         artists_team = getter(data,"_embedded.attractions",default=[])
         team = []
@@ -75,7 +75,7 @@ class EventDetailsSerialiser(Serializer):
             "state": getter(venue, "state.name"),
             "address": getter(venue, "address.line1"),
             "location": {"lat": getter(venue, "location.latitude"), "long": getter(venue, "location.longitude")}
-        }
+        } if venue else {}
         segment = getter(data, "classifications.0.segment.name")    
         genre = getter(data, "classifications.0.genre.name")    
         subGenre = getter(data, "classifications.0.subGenre.name")

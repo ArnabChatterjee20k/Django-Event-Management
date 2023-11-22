@@ -44,4 +44,4 @@ def getDetailsOfEventById(request,id):
 @api_view(["GET"])
 def getSuggestion(request):
     data = Suggestions().send_suggestions()
-    return Response({"suggestions":data})
+    return Response(data)

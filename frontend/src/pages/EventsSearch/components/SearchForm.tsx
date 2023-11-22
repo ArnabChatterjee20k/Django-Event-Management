@@ -7,33 +7,12 @@ import { useEventSearchContext } from "../context/EventSearchContextProvider";
 import useFetchEvents from "../services/useFetchEvents";
 import EmptyResultIndicator from "./EmptyResultIndicator";
 import queryLocationAndFetchEvents from "../services/queryLocationAndFetchEvents";
-import CurrentLocationDetails from "../../../types/CurrentLocationDetails";
-
-const dummy = [
-  {
-    id: "G5vGZ9seQb3Ba",
-    event:
-      "2023-24 Hungry Jacks NBL Season - Illawarra Hawks v Tas JackJumpers",
-    date_time: "2023-12-23T06:30:00Z",
-    genre: "Basketball",
-    venue: "WIN Entertainment Centre",
-    icon: "https://s1.ticketm.net/dam/a/b1a/76093d42-4c4a-425e-98b6-1391fe893b1a_1495931_RETINA_PORTRAIT_16_9.jpg",
-  },
-  {
-    id: "G5vGZ9seQb3Ba",
-    event:
-      "2023-24 Hungry Jacks NBL Season - Illawarra Hawks v Tas JackJumpers",
-    date_time: "2023-12-23T06:30:00Z",
-    genre: "Basketball",
-    venue: "WIN Entertainment Centre",
-    icon: "https://s1.ticketm.net/dam/a/b1a/76093d42-4c4a-425e-98b6-1391fe893b1a_1495931_RETINA_PORTRAIT_16_9.jpg",
-  },
-];
+import SuggestionField from "./SuggestionField";
 
 export default function SearchForm() {
   const { searchSettings, updateSettings, resetSettingsToDefault } =
     useEventSearchContext();
-  const { queryEvents, data, isSuccess, isError, error, isPending } =
+  const { queryEvents, data, isSuccess, isPending } =
     useFetchEvents();
 
   const { getCurrentLocationDetails } = queryLocationAndFetchEvents();
@@ -58,15 +37,9 @@ export default function SearchForm() {
       >
         <h1 className="text-white text-4xl text-center">Events Search</h1>
         <hr className="my-4" />
-        <Input
-          value={searchSettings.keyword}
-          name="keyword"
-          onChange={updateSettings}
-          label="keyword"
-          type="text"
-          message="Please enter the keyword"
-        />
+        <SuggestionField/>
         <div className="flex items-center gap-7">
+          
           <Input
             value={searchSettings.distance}
             name="distance"

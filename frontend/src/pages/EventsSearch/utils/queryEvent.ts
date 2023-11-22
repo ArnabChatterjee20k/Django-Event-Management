@@ -24,6 +24,7 @@ export default async (curentSearchQuery: SettingsWithAutoSearch,location?:Coordi
     );
   const {autoLocationEnabled, ...body} = curentSearchQuery
   if(location) body.location = location
+  body.keyword = encodeURI(body.keyword)
   const res = await fetch(url, {
     method: "post",
     body: JSON.stringify(body),
