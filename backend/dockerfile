@@ -1,0 +1,9 @@
+FROM python:latest
+
+WORKDIR /event_management
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+EXPOSE 8000
+CMD [ "python","event_management/manage.py","runserver","0.0.0.0:8000"]
