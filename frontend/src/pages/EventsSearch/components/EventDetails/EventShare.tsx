@@ -1,11 +1,9 @@
-import React from "react";
 import {
   TwitterIcon,
   TwitterShareButton,
   FacebookIcon,
   FacebookShareButton,
 } from "react-share";
-
 import useEventDetails from "../../services/useEventDetails";
 import { useParams } from "react-router-dom";
 
