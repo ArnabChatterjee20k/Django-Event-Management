@@ -12,8 +12,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
-
 load_dotenv(".env")
+
+CRON_LOGFILE = '/event_mangement/cron/cron.log'
+CRONJOBS = [
+    ('* * * */2 *', 'cron.store_suggestion.store_suggestion'),
+
+    ('* * * */3 *', 'cron.store_events.store_events'),
+]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework",
+    "django_crontab",
     "event_search"
 ]
 
