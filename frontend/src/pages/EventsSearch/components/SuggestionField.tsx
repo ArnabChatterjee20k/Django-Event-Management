@@ -4,7 +4,7 @@ import Input from "../../../components/Input";
 import Fuse from "fuse.js";
 import { useState } from "react";
 export default function SuggestionField() {
-  const { data, isSuccess } = useSuggestions();
+  const { data } = useSuggestions();
   const { searchSettings, updateSettings } = useEventSearchContext();
   const [show, setShow] = useState(false);
   const fuse = new Fuse(data || [], {

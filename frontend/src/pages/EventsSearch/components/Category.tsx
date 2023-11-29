@@ -1,6 +1,5 @@
-import { useState } from "react";
 import * as Select from "@radix-ui/react-select";
-import { CategoryData, DEFAULT_CATEGORY } from "../data/CategoryData";
+import { CategoryData } from "../data/CategoryData";
 import DropdownIcon from "../../../icons/DropdownIcon";
 import { useEventSearchContext } from "../context/EventSearchContextProvider";
 

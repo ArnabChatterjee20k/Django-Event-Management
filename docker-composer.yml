@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+
+  app:
+    container_name: backend
+    build: 
+      context: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+    command: >
+      sh -c "python3 event_management/manage.py runscript seed_data && event_management/manage.py runserver 0.0.0.0:8000"
+    # restart: always
+    networks:
+      - backend
+
+  frontend:
+    build: 
+      context: ./frontend
+    ports:
+      - "4173:4173"
+
+networks:
+  backend:
+    driver: bridge

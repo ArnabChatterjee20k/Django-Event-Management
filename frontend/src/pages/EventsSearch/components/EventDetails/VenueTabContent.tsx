@@ -1,9 +1,6 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import {
-  EventLinkField,
   EventTextField,
-  EventSaleField,
   EventCollapsable,
 } from "./EventField";
 import useEventDetails from "../../services/useEventDetails";
