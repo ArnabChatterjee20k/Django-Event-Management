@@ -1,9 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation,useQueryClient } from "@tanstack/react-query";
 import fetchCurrentLocationDetails from "../../../utils/fetchCurrentLocationDetails";
 import type { SettingsWithAutoSearch } from "../types/SettingsType";
 import queryEvents from "../utils/queryEvent";
 
 export default function queryLocationAndFetchEvents() {
+  const queryClient = useQueryClient()
   const { mutateAsync } = useMutation({
     mutationFn: () => fetchCurrentLocationDetails(),
   });
@@ -11,14 +12,16 @@ export default function queryLocationAndFetchEvents() {
     searchQueryParams: SettingsWithAutoSearch
   ) {
     return mutateAsync(undefined, {
-      onSuccess: (data) => {
+      onSuccess: async(data) => {
         alert("Location Fetched");
         const { loc } = data;
         const [lat, long] = loc.split(",");
-        queryEvents(searchQueryParams, {
+        const events = await queryEvents(searchQueryParams, {
           lat: parseFloat(lat),
           long: parseFloat(long),
         });
+        queryClient.setQueryData(["current-searched-event"], events);
+
       },
       onError: () => {
         alert("Error while fetching the details");

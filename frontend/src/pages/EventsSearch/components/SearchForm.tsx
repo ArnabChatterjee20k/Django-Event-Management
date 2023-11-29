@@ -8,13 +8,15 @@ import useFetchEvents from "../services/useFetchEvents";
 import EmptyResultIndicator from "./EmptyResultIndicator";
 import queryLocationAndFetchEvents from "../services/queryLocationAndFetchEvents";
 import SuggestionField from "./SuggestionField";
+import useCurrentSearchedEvent from "../services/useCurrentSearchedEvent";
 
 export default function SearchForm() {
   const { searchSettings, updateSettings, resetSettingsToDefault } =
     useEventSearchContext();
-  const { queryEvents, data, isSuccess, isPending } =
+const { queryEvents,isPending } =
     useFetchEvents();
-
+  const {data} = useCurrentSearchedEvent()
+  
   const { getCurrentLocationDetails } = queryLocationAndFetchEvents();
 
   function handleSubmit() {
@@ -71,7 +73,7 @@ export default function SearchForm() {
           </Button>
         </div>
       </Form.Root>
-      {isSuccess && data?.length === 0 && <EmptyResultIndicator />}
+      {typeof(data)==="object" && data?.length === 0 && <EmptyResultIndicator />}
     </div>
   );
 }
