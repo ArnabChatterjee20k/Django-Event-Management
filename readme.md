@@ -1,7 +1,7 @@
 ### Working
 
 For setting it up please read GettingStarted
-
+For advaned settings and proper docker setup , watch this - https://www.youtube.com/watch?v=PkynrL1aU9o&list=PLOLrQ9Pn6cayGytG1fgUPEsUp3Onol8V7&index=3
 ---
 
 <aside>
